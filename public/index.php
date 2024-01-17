@@ -1,4 +1,5 @@
 <?php
 
+$app = include __DIR__ . "/../src/App/bootstrap.php";
 
-echo  '<h1>Welcome to PHPIGGY</h1>';
+$app->run();
