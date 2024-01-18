@@ -1,0 +1,19 @@
+{
+    "name": "belchenkov/phpiggy",
+    "description": "A PHP application for tracking expenses.",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Алексей Бельченков",
+            "email": "u608110@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Framework\\": "src/Framework",
+            "App\\": "src/App"
+        }
+    }
+}
