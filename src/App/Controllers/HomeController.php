@@ -4,10 +4,22 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Config\Paths;
+use Framework\TemplateEngine;
+
 class HomeController
 {
-    public function home()
+    private TemplateEngine $view;
+
+    public function __construct()
     {
-        echo 'home page';
+        $this->view = new TemplateEngine(Paths::VIEW);
+    }
+
+    public function home(): void
+    {
+        echo $this->view->render("/index.php", [
+            'title' => 'Home page'
+        ]);
     }
 }
