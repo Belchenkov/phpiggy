@@ -6,11 +6,18 @@ namespace Framework;
 
 class App
 {
-    private Router $router;
+    private readonly Router $router;
+    private readonly Container $container;
 
-    public function __construct()
+    public function __construct(string $container_definitions_path = null)
     {
         $this->router = new Router();
+        $this->container = new Container();
+
+        if ($container_definitions_path) {
+            $container_definitions_path = include $container_definitions_path;
+            $this->container->addDefinitions($container_definitions_path);
+        }
     }
 
     public function run(): void
