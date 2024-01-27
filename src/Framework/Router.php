@@ -31,8 +31,19 @@ class Router
             }
 
             [$class, $function] = $route['controller'];
+
             $controller_instance = $container ? $container->resolve($class) : new $class;
-            $controller_instance->$function();
+
+            $action = fn () => $controller_instance->$function();
+
+            foreach ($this->middlewares as $middleware) {
+                $middleware_instance = $container ? $container->resolve($middleware) : new $middleware;
+                $action = fn () => $middleware_instance->process($action);
+            }
+
+            $action();
+
+            return;
         }
     }
 
