@@ -7,6 +7,7 @@ namespace Framework;
 class Router
 {
     private array $routes = [];
+    private array $middlewares = [];
 
     public function add(string $method, string $path, array $controller): void
     {
@@ -33,6 +34,11 @@ class Router
             $controller_instance = $container ? $container->resolve($class) : new $class;
             $controller_instance->$function();
         }
+    }
+
+    public function addMiddleware(string $middleware): void
+    {
+        $this->middlewares[] = $middleware;
     }
 
     private function normalizePath(string $path): string

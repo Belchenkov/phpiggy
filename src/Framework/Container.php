@@ -14,7 +14,10 @@ class Container
 
     public function addDefinitions(array $new_definitions): void
     {
-        $this->definitions = [...$this->definitions, ...$new_definitions];
+        $this->definitions = [
+            ...$this->definitions,
+            ...$new_definitions
+        ];
     }
 
     /**
@@ -55,6 +58,8 @@ class Container
 
             $dependencies[] = $this->get($type->getName());
        }
+
+       return $reflection_class->newInstanceArgs($dependencies);
     }
 
     /**
