@@ -11,7 +11,7 @@ class TemplateDataMiddleware implements MiddlewareInterface
 {
 
     public function __construct(
-        private readonly TemplateEngine $view
+        private readonly TemplateEngine $view,
     )
     {}
 

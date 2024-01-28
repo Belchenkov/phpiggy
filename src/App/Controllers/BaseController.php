@@ -9,7 +9,7 @@ use Framework\TemplateEngine;
 class BaseController
 {
     public function __construct(
-        protected TemplateEngine $view
+        protected TemplateEngine $view,
     )
     {}
 }
