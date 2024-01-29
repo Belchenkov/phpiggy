@@ -18,6 +18,6 @@ class AuthController extends BaseController
 
     public function registerStore(): void
     {
-
+        (new ValidatorService())->validateRegister($_POST);
     }
 }
