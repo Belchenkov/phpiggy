@@ -13,11 +13,12 @@ class ValidationExceptionMiddleware implements MiddlewareInterface
     public function process(callable $next)
     {
         try {
-
             $next();
         } catch (ValidationException $e) {
-            
-            redirectTo("/register");
+            $_SESSION['errors'] = $e->errors;
+
+            $referer = $_SERVER['HTTP_REFERER'];
+            redirectTo($referer);
         }
     }
 }
