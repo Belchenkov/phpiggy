@@ -3,7 +3,10 @@
 <section
     class="max-w-2xl mx-auto mt-12 p-4 bg-white shadow-md border border-gray-200 rounded"
 >
-    <?php /**@var array $errors */ ?>
+    <?php /**
+     * @var array $errors
+     * @var array $old_form_data
+    */ ?>
     <form
         action="/register"
         method="POST"
@@ -17,6 +20,7 @@
                 type="email"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder="john@example.com"
+                value="<?= e($old_form_data['email'] ?? ''); ?>"
             />
             <?php if (array_key_exists('email', $errors)) : ?>
                 <div class="bg-gray-100 mt-2 p-2 text-red-500"><?= e($errors['email'][0]); ?></div>
@@ -30,6 +34,7 @@
                 type="number"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder=""
+                value="<?= e($old_form_data['age'] ?? ''); ?>"
             />
             <?php if (array_key_exists('age', $errors)) : ?>
                 <div class="bg-gray-100 mt-2 p-2 text-red-500"><?= e($errors['age'][0]); ?></div>
@@ -59,6 +64,7 @@
                 type="text"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder=""
+                value="<?= e($old_form_data['socialMediaURL'] ?? ''); ?>"
             />
             <?php if (array_key_exists('socialMediaURL', $errors)) : ?>
                 <div class="bg-gray-100 mt-2 p-2 text-red-500"><?= e($errors['socialMediaURL'][0]); ?></div>
@@ -99,6 +105,7 @@
                             name="accept"
                             class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
                             type="checkbox"
+                            <?= $old_form_data['accept'] ?? false ? 'checked' : ''; ?>
                         />
                         <span class="ml-2">I accept the terms of service.</span>
                     </label>
