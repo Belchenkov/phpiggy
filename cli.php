@@ -12,5 +12,7 @@ $db = new Database('mysql', [
     'dbname' => 'phpiggy',
 ], 'root', '!mysqlBelchenkov88');
 
-echo "Connected to Database";
+$query = 'SELECT * FROM users';
+
+$stmt = $db->connection->query($query, PDO::FETCH_ASSOC);
 
