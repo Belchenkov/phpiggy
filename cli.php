@@ -12,7 +12,6 @@ $db = new Database('mysql', [
     'dbname' => 'phpiggy',
 ], 'root', '!mysqlBelchenkov88');
 
-$query = 'SELECT * FROM users';
+$sql_file = file_get_contents("./database.sql");
 
-$stmt = $db->connection->query($query, PDO::FETCH_ASSOC);
-
+$db->connection->query($sql_file);
