@@ -6,11 +6,12 @@ namespace Framework;
 
 use PDO;
 use PDOException;
+use PDOStatement;
 
 final class Database
 {
     public readonly PDO $connection;
-    private PDOStatement $stmt;
+    public PDOStatement $stmt;
 
     public function __construct(
         string $driver,
@@ -30,9 +31,16 @@ final class Database
         }
     }
 
-    public function query(string $query, array $params): void
+    public function query(string $query, array $params): self
     {
         $this->stmt = $this->connection->prepare($query);
         $this->stmt->execute($params);
+
+        return $this;
+    }
+
+    public function count()
+    {
+        return $this->stmt->fetchColumn();
     }
 }
