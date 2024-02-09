@@ -7,9 +7,10 @@ namespace Framework;
 use PDO;
 use PDOException;
 
-class Database
+final class Database
 {
-    public PDO $connection;
+    public readonly PDO $connection;
+    private PDOStatement $stmt;
 
     public function __construct(
         string $driver,
@@ -27,5 +28,11 @@ class Database
         } catch (PDOException $e) {
             die('Unable to connect to database.');
         }
+    }
+
+    public function query(string $query, array $params): void
+    {
+        $this->stmt = $this->connection->prepare($query);
+        $this->stmt->execute($params);
     }
 }
