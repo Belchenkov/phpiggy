@@ -17,6 +17,13 @@ class AuthController
     )
     {}
 
+    public function loginForm(): void
+    {
+        echo $this->view->render("/login.php", [
+            'title' => 'Login'
+        ]);
+    }
+
     public function registerForm(): void
     {
         echo $this->view->render("/register.php", [
@@ -29,6 +36,13 @@ class AuthController
         $this->s_validator->validateRegister($_POST);
         $this->s_user->isEmailTaken($_POST['email']);
         $this->s_user->create($_POST);
+
+        redirectTo('/');
+    }
+
+    public function loginStore(): void
+    {
+        $this->s_validator->validateLogin($_POST);
 
         redirectTo('/');
     }
