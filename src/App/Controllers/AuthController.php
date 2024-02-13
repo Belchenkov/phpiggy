@@ -44,6 +44,8 @@ class AuthController
     {
         $this->s_validator->validateLogin($_POST);
 
+        $this->s_user->login($_POST);
+
         redirectTo('/');
     }
 }

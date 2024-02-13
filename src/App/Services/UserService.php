@@ -33,8 +33,6 @@ class UserService
 
     public function create(array $form_data): void
     {
-
-
         $this->db->query("INSERT INTO users(email,password,age,country,social_media_url) VALUES(:email, :password, :age, :country, :social_media_url)", [
             'email' => $form_data['email'],
             'password' => password_hash($form_data['password'], PASSWORD_BCRYPT, ['cost' => 12]),
@@ -42,5 +40,20 @@ class UserService
             'country' => $form_data['country'],
             'social_media_url' => $form_data['socialMediaURL'],
         ]);
+    }
+
+    public function login(array $form_data): void
+    {
+        $user = $this->db->query("SELECT id, password, email FROM users WHERE email = :email", [
+            'email' => $form_data['email'],
+        ])->find();
+
+        $passwords_match = password_verify($form_data['password'], $user['password'] ?? '');
+
+        if (!$user || !$passwords_match) {
+            throw new ValidationException(['password' => ['Invalid Credentials!']]);
+        }
+
+        $_SESSION['user'] = $user['id'];
     }
 }
