@@ -33,14 +33,23 @@ class App
         $this->router->addMiddleware($middleware);
     }
 
-    public function get(string $path, array $controller): void
+    public function get(string $path, array $controller): self
     {
         $this->router->add('GET', $path, $controller);
+
+        return $this;
     }
 
-    public function post(string $path, array $controller): void
+    public function post(string $path, array $controller): self
     {
         $this->router->add('POST', $path, $controller);
+
+        return $this;
+    }
+
+    public function middleware(string $middleware): void
+    {
+        $this->router->addRouteMiddleware($middleware);
     }
 
 }
