@@ -50,4 +50,9 @@ final class Database
     {
         return $this->stmt->fetch();
     }
+
+    public function id(): bool | string
+    {
+        return $this->connection->lastInsertId();
+    }
 }
