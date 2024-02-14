@@ -48,4 +48,11 @@ class AuthController
 
         redirectTo('/');
     }
+
+    public function logout(): void
+    {
+        $this->s_user->logout();
+
+        redirectTo('/');
+    }
 }

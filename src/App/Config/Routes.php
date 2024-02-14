@@ -17,6 +17,7 @@ function registerRoutes(App $app): void
     $app->get('/about', [AboutController::class, 'about']);
     $app->get('/register', [AuthController::class, 'registerForm'])->middleware(GuestOnlyMiddleware::class);
     $app->get('/login', [AuthController::class, 'loginForm'])->middleware(GuestOnlyMiddleware::class);
+    $app->get('/logout', [AuthController::class, 'logout'])->middleware(AuthRequiredMiddleware::class);
     $app->post('/register', [AuthController::class, 'registerStore'])->middleware(GuestOnlyMiddleware::class);
     $app->post('/login', [AuthController::class, 'loginStore'])->middleware(GuestOnlyMiddleware::class);
 }
