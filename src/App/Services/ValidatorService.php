@@ -5,15 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use Framework\Validator;
-use Framework\Rules\{
-    RequiredRule,
-    EmailRule,
-    MinRule,
-    InRule,
-    UrlRule,
-    MinLengthRule,
-    MatchRule,
-};
+use Framework\Rules\{MaxRule, RequiredRule, EmailRule, MinRule, InRule, UrlRule, MinLengthRule, MatchRule};
 
 class ValidatorService
 {
@@ -29,6 +21,7 @@ class ValidatorService
         $this->validator->add('url', new UrlRule());
         $this->validator->add('min_length', new MinLengthRule());
         $this->validator->add('match', new MatchRule());
+        $this->validator->add('max_length', new MaxRule());
     }
 
     public function validateRegister(array $form_data): void
@@ -55,7 +48,7 @@ class ValidatorService
     public function validateTransaction(array $form_data): void
     {
         $this->validator->validate($form_data, [
-            'description' => ['required', 'min_length:3'],
+            'description' => ['required', 'min_length:3', 'max_length:255'],
             'amount' => ['required', 'min:1'],
             'date' => ['required']
         ]);
