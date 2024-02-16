@@ -5,7 +5,18 @@ declare(strict_types=1);
 namespace App\Services;
 
 use Framework\Validator;
-use Framework\Rules\{MaxRule, NumericRule, RequiredRule, EmailRule, MinRule, InRule, UrlRule, MinLengthRule, MatchRule};
+use Framework\Rules\{
+    DateFormatRule,
+    MaxRule,
+    NumericRule,
+    RequiredRule,
+    EmailRule,
+    MinRule,
+    InRule,
+    UrlRule,
+    MinLengthRule,
+    MatchRule
+};
 
 class ValidatorService
 {
@@ -23,6 +34,7 @@ class ValidatorService
         $this->validator->add('match', new MatchRule());
         $this->validator->add('max_length', new MaxRule());
         $this->validator->add('numeric', new NumericRule());
+        $this->validator->add('date_format', new DateFormatRule());
     }
 
     public function validateRegister(array $form_data): void
@@ -51,7 +63,7 @@ class ValidatorService
         $this->validator->validate($form_data, [
             'description' => ['required', 'min_length:3', 'max_length:255'],
             'amount' => ['required', 'min:1', 'numeric'],
-            'date' => ['required']
+            'date' => ['required', 'date_format:Y-m-d']
         ]);
     }
 }
