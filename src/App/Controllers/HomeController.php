@@ -17,9 +17,24 @@ class HomeController
 
     public function home(): void
     {
+        $page = $_GET['page'] ?? 1;
+        $page = (int) $page;
+        $length = 3;
+        $offset = ($page - 1) * $length;
+        $search_term = $_GET['s'] ?? null;
+
+        [$transactions, $count] = $this->s_transaction->getUserTransactions($length, $offset);
+
+        $last_page = ceil($count / $length);
+
         echo $this->view->render("/index.php", [
             'title' => 'Home',
-            'transactions' => $this->s_transaction->getUserTransactions(),
+            'current_page' => $page,
+            'previous_page_query' => http_build_query(['page' => $page + 1, 's' => $search_term]),
+            'next_page_query' => http_build_query(['page' => $page - 1, 's' => $search_term]),
+            'transactions' => $transactions,
+            'count' => $count,
+            'last_page' => $last_page,
         ]);
     }
 }
