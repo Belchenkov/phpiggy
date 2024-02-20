@@ -31,4 +31,11 @@ class TransactionController
 
         redirectTo('/');
     }
+
+    public function editView(array $params): void
+    {
+        echo $this->view->render("transactions/create.php", [
+            'title' => 'Edit Transaction'
+        ]);
+    }
 }
