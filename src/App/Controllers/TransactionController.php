@@ -32,10 +32,17 @@ class TransactionController
         redirectTo('/');
     }
 
-    public function editView(array $params): void
+    public function editForm(array $params): void
     {
-        echo $this->view->render("transactions/create.php", [
-            'title' => 'Edit Transaction'
+        $transaction = $this->s_transaction->getUserTransaction($params['transaction']);
+
+        if (!$transaction) {
+            redirectTo('/');
+        }
+
+        echo $this->view->render("transactions/edit.php", [
+            'title' => 'Edit Transaction',
+            'transaction' => $transaction
         ]);
     }
 }
