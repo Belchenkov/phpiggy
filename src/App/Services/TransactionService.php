@@ -64,4 +64,18 @@ class TransactionService
             ]
         )->find();
     }
+
+    public function update(array $form_data, int $id): void
+    {
+        $this->db->query(
+            "UPDATE transactions SET description = :description, amount = :amount, date = :date WHERE id = :id AND user_id = :user_id",
+            [
+                'user_id' => $_SESSION['user'],
+                'id' => $id,
+                'description' => $form_data['description'],
+                'amount' => $form_data['amount'],
+                'date' => "{$form_data['date']} 00:00:00",
+            ]
+        );
+    }
 }

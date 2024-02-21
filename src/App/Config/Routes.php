@@ -24,4 +24,5 @@ function registerRoutes(App $app): void
     $app->post('/login', [AuthController::class, 'loginStore'])->middleware(GuestOnlyMiddleware::class);
     $app->post('/transaction', [TransactionController::class, 'createStore'])->middleware(AuthRequiredMiddleware::class);
     $app->get('/transaction/{transaction}', [TransactionController::class, 'editForm'])->middleware(AuthRequiredMiddleware::class);
+    $app->post('/transaction/{transaction}', [TransactionController::class, 'editStore'])->middleware(AuthRequiredMiddleware::class);
 }

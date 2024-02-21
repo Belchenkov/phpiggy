@@ -45,4 +45,19 @@ class TransactionController
             'transaction' => $transaction
         ]);
     }
+
+    public function editStore(array $params): void
+    {
+        $transaction = $this->s_transaction->getUserTransaction($params['transaction']);
+
+        if (!$transaction) {
+            redirectTo('/');
+        }
+
+        $this->s_validator->validateTransaction($_POST);
+
+        $this->s_transaction->update($_POST, $transaction['id']);
+
+        redirectTo('/');
+    }
 }
