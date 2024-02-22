@@ -7,6 +7,7 @@ namespace App\Config;
 use App\Controllers\AboutController;
 use App\Controllers\AuthController;
 use App\Controllers\HomeController;
+use App\Controllers\ReceiptController;
 use App\Controllers\TransactionController;
 use App\Middleware\AuthRequiredMiddleware;
 use App\Middleware\GuestOnlyMiddleware;
@@ -26,4 +27,7 @@ function registerRoutes(App $app): void
     $app->get('/transaction/{transaction}', [TransactionController::class, 'editForm'])->middleware(AuthRequiredMiddleware::class);
     $app->post('/transaction/{transaction}', [TransactionController::class, 'editStore'])->middleware(AuthRequiredMiddleware::class);
     $app->delete('/transaction/{transaction}', [TransactionController::class, 'delete'])->middleware(AuthRequiredMiddleware::class);
+    $app->get('/transaction/{transaction}/receipt', [ReceiptController::class, 'uploadView'])->middleware(AuthRequiredMiddleware::class);
+    $app->post('/transaction/{transaction}/receipt', [ReceiptController::class, 'upload'])->middleware(AuthRequiredMiddleware::class);
+
 }
