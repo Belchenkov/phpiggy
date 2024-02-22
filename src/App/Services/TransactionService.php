@@ -78,4 +78,15 @@ class TransactionService
             ]
         );
     }
+
+    public function delete(int $id): void
+    {
+        $this->db->query(
+            "DELETE FROM transactions WHERE id = :id AND user_id = :user_id",
+            [
+                'id' => $id,
+                'user_id' => $_SESSION['user'],
+            ]
+        );
+    }
 }

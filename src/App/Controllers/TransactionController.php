@@ -60,4 +60,11 @@ class TransactionController
 
         redirectTo('/');
     }
+
+    public function delete(array $params): void
+    {
+        $this->s_transaction->delete((int) $params['transaction']);
+
+        redirectTo('/');
+    }
 }
