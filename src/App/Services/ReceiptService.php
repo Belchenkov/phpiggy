@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Config\Paths;
 use Framework\Database;
 use Framework\Exceptions\ValidationException;
 
@@ -22,7 +23,7 @@ class ReceiptService
             ]);
         }
 
-        $max_file_size_mb = 3 * 1024;
+        $max_file_size_mb = 3 * 1024 * 1024;
 
         if ($file['size'] > $max_file_size_mb) {
             throw new ValidationException([
@@ -48,6 +49,23 @@ class ReceiptService
         if (!in_array($client_mime_type, $allowed_mime_types)) {
             throw new ValidationException([
                 'receipt' => ['Invalid file type!'],
+            ]);
+        }
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function upload(array $file): void
+    {
+        $file_ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+        $new_file_name = bin2hex(random_bytes(16)) . '.' . $file_ext;
+
+        $upload_path = Paths::STORAGE_UPLOADS . '/' . $new_file_name;
+
+        if (!move_uploaded_file($file['tmp_name'], $upload_path)) {
+            throw new ValidationException([
+                'receipt' => ['Failed to upload file!'],
             ]);
         }
     }
