@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Services\ReceiptService;
 use App\Services\TransactionService;
 use Framework\TemplateEngine;
 
@@ -11,13 +12,14 @@ class ReceiptController
 {
     public function __construct(
         private readonly TemplateEngine $view,
-        private readonly TransactionService $transactionService,
+        private readonly TransactionService $s_transaction,
+        private readonly ReceiptService $s_receipt,
     ) {
     }
 
     public function uploadView(array $params): void
     {
-        $transaction = $this->transactionService->getUserTransaction($params['transaction']);
+        $transaction = $this->s_transaction->getUserTransaction($params['transaction']);
 
         if (!$transaction) {
             redirectTo("/");
@@ -28,11 +30,15 @@ class ReceiptController
 
     public function upload(array $params): void
     {
-        $transaction = $this->transactionService->getUserTransaction($params['transaction']);
+        $transaction = $this->s_transaction->getUserTransaction($params['transaction']);
 
         if (!$transaction) {
             redirectTo("/");
         }
+
+        $receipt_file = $_FILES['receipt'] ?? null;
+
+        $this->s_receipt->validateFile($receipt_file);
 
         redirectTo("/");
     }
