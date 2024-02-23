@@ -28,6 +28,9 @@ class ReceiptController
         echo $this->view->render("receipts/create.php");
     }
 
+    /**
+     * @throws \Exception
+     */
     public function upload(array $params): void
     {
         $transaction = $this->s_transaction->getUserTransaction($params['transaction']);
@@ -40,7 +43,7 @@ class ReceiptController
 
         $this->s_receipt->validateFile($receipt_file);
 
-        $this->s_receipt->upload($receipt_file);
+        $this->s_receipt->upload($receipt_file, $transaction['id']);
 
         redirectTo("/");
     }
