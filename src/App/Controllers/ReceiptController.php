@@ -67,6 +67,20 @@ class ReceiptController
 
     public function delete(array $params): void
     {
+        $transaction = $this->s_transaction->getUserTransaction($params['transaction']);
 
+        if (!$transaction) {
+            redirectTo("/");
+        }
+
+        $receipt = $this->s_receipt->getReceipt((int)$params['receipt']);
+
+        if (empty($receipt) || $receipt['transaction_id'] !== $transaction['id']) {
+            redirectTo("/");
+        }
+
+        $this->s_receipt->delete($receipt);
+
+        redirectTo("/");
     }
 }
