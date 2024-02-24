@@ -28,6 +28,8 @@ function registerRoutes(App $app): void
     $app->post('/transaction/{transaction}', [TransactionController::class, 'editStore'])->middleware(AuthRequiredMiddleware::class);
     $app->delete('/transaction/{transaction}', [TransactionController::class, 'delete'])->middleware(AuthRequiredMiddleware::class);
     $app->get('/transaction/{transaction}/receipt', [ReceiptController::class, 'uploadView'])->middleware(AuthRequiredMiddleware::class);
+    $app->get('/transaction/{transaction}/receipt/{receipt}', [ReceiptController::class, 'download'])->middleware(AuthRequiredMiddleware::class);
     $app->post('/transaction/{transaction}/receipt', [ReceiptController::class, 'upload'])->middleware(AuthRequiredMiddleware::class);
+    $app->delete('/transaction/{transaction}/receipt/{receipt}', [ReceiptController::class, 'delete'])->middleware(AuthRequiredMiddleware::class);
 
 }

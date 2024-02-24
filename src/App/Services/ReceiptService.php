@@ -80,4 +80,26 @@ class ReceiptService
             ]
         );
     }
+
+    public function getReceipt(int $id)
+    {
+        return $this->db->query(
+          "SELECT * FROM receipts WHERE id = :id",
+          ['id' => $id]
+        )->find();
+    }
+
+    public function read(array $receipt): void
+    {
+        $file_path = Paths::STORAGE_UPLOADS . '/' . $receipt['storage_filename'];
+
+        if (!file_exists($file_path)) {
+            redirectTo("/");
+        }
+
+        header("Content-Disposition: inline;filename={$receipt['original_filename']}");
+        header("Content-Type: {$receipt['media_type']}");
+
+        readfile($file_path);
+    }
 }
