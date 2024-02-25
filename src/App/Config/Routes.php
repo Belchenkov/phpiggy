@@ -6,6 +6,7 @@ namespace App\Config;
 
 use App\Controllers\AboutController;
 use App\Controllers\AuthController;
+use App\Controllers\ErrorController;
 use App\Controllers\HomeController;
 use App\Controllers\ReceiptController;
 use App\Controllers\TransactionController;
@@ -32,4 +33,5 @@ function registerRoutes(App $app): void
     $app->post('/transaction/{transaction}/receipt', [ReceiptController::class, 'upload'])->middleware(AuthRequiredMiddleware::class);
     $app->delete('/transaction/{transaction}/receipt/{receipt}', [ReceiptController::class, 'delete'])->middleware(AuthRequiredMiddleware::class);
 
+    $app->setErrorHandler([ErrorController::class, 'notFound']);
 }
